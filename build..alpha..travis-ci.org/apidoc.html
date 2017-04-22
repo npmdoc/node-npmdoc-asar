@@ -411,7 +411,22 @@ There is also an unofficial grunt plugin to generate asar archives at [bwin/grun
     }
   })
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+                              asar.extractFile(archive, filename))
+})
+
+program.command(&#x27;extract &#x3c;archive&#x3e; &#x3c;dest&#x3e;&#x27;)
+.alias(&#x27;e&#x27;)
+.description(&#x27;extract archive&#x27;)
+.action(function (archive, dest) {
+  asar.<span class="apidocCodeKeywordSpan">extractAll</span>(archive, dest)
+})
+
+program.command(&#x27;*&#x27;)
+.action(function (cmd) {
+  console.log(&#x27;asar: \&#x27;%s\&#x27; is not an asar command. See \&#x27;asar --help\&#x27;.&#x27;, cmd)
+})
+...</pre></li>
     </ul>
 
 
@@ -427,7 +442,23 @@ There is also an unofficial grunt plugin to generate asar archives at [bwin/grun
   const filesystem = disk.readFilesystemSync(archive)
   return disk.readFileSync(filesystem, filename, filesystem.getFile(filename))
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+})
+
+program.command(&#x27;extract-file &#x3c;archive&#x3e; &#x3c;filename&#x3e;&#x27;)
+.alias(&#x27;ef&#x27;)
+.description(&#x27;extract one file from archive&#x27;)
+.action(function (archive, filename) {
+  require(&#x27;fs&#x27;).writeFileSync(require(&#x27;path&#x27;).basename(filename),
+                              asar.<span class="apidocCodeKeywordSpan">extractFile</span>(archive, filename))
+})
+
+program.command(&#x27;extract &#x3c;archive&#x3e; &#x3c;dest&#x3e;&#x27;)
+.alias(&#x27;e&#x27;)
+.description(&#x27;extract archive&#x27;)
+.action(function (archive, dest) {
+  asar.extractAll(archive, dest)
+...</pre></li>
     </ul>
 
 
@@ -442,7 +473,23 @@ There is also an unofficial grunt plugin to generate asar archives at [bwin/grun
     <li>description and source-code<pre class="apidocCodePre">listPackage = function (archive) {
   return disk.readFilesystemSync(archive).listFiles()
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  })
+})
+
+program.command(&#x27;list &#x3c;archive&#x3e;&#x27;)
+.alias(&#x27;l&#x27;)
+.description(&#x27;list files of asar archive&#x27;)
+.action(function (archive) {
+  var files = asar.<span class="apidocCodeKeywordSpan">listPackage</span>(archive)
+  for (var i in files) {
+    console.log(files[i])
+  }
+})
+
+program.command(&#x27;extract-file &#x3c;archive&#x3e; &#x3c;filename&#x3e;&#x27;)
+.alias(&#x27;ef&#x27;)
+...</pre></li>
     </ul>
 
 
